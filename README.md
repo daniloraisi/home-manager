@@ -2,7 +2,7 @@
 
 ### Install the necessary system packages on Arch Linux
 ```bash
-sudo bash pacman -S --needed --noconfirm git curl wget base-devel net-tools openssh zsh
+sudo pacman -S --needed --noconfirm git curl wget base-devel net-tools openssh zsh
 ```
 
 ### Update the user shell to be zsh
