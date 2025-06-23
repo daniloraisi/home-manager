@@ -123,11 +123,6 @@ in
       keys = [ "id_ed25519" ];
     };
 
-    carapace = {
-      enable = true;
-      enableZshIntegration = true;
-    };
-
     eza = {
       enable = true;
       colors = "always";
