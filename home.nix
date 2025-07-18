@@ -83,9 +83,11 @@ in
 
     zsh = {
       enable = true;
-      initExtra = "zstyle ':completion:*' format $'\\e[2;37mCompleting %d\\e[m'";
+      enableCompletions = true;
+      autosuggestions.enable = true;
+      syntaxHighlighting.enable = true;
       shellAliases = {
-        ls = "eza";
+        ls = "eza -1lagh --git --color --icons";
       };
     };
 
