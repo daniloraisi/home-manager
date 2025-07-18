@@ -83,8 +83,8 @@ in
 
     zsh = {
       enable = true;
-      enableCompletions = true;
-      autosuggestions.enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
         ls = "eza -1lagh --git --color --icons";
