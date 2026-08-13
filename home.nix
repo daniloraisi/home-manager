@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   starshipToml = ./dotfiles/starship.toml;
@@ -72,9 +72,11 @@ in
   #  /etc/profiles/per-user/danilo/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
-    ZELLIJ_AUTO_EXIT = "true";
+    EDITOR = "vim";
+    ZELLIJ_AUTO_EXIT = lib.mkForce "true";
     CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
+    PATH="$HOME/.local/bin:$PATH";
+    BROWSER="/mnt/c/Windows/System32/cmd.exe /c start";
   };
 
   # Let Home Manager install and manage itself.
