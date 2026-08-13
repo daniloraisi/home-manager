@@ -134,5 +134,9 @@ in
       icons = "always";
       extraOptions = [ "-1lagh" ];
     };
+
+    xdg = {
+      enable = true;
+    };
   };
 }
