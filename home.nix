@@ -136,8 +136,4 @@ in
     };
 
   };
-
-  xdg = {
-    enable = true;
-  };
 }
