@@ -134,6 +134,7 @@ in
       icons = "always";
       extraOptions = [ "-1lagh" ];
     };
-
+    
+    lazygit.enable = true;
   };
 }
