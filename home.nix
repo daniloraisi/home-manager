@@ -38,6 +38,7 @@ in
     # (pkgs.writeShellScriptBin "my-hello" ''
     #   echo "Hello, ${config.home.username}!"
     # '')
+    pkgs.xdg-utils
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -137,4 +138,6 @@ in
     
     lazygit.enable = true;
   };
+
+  xdg.enable = true;
 }
