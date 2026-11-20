@@ -22,7 +22,7 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
-          (builtins.path { path = ./local.nix; })
+          (import ./local.nix)
         ];
 
         # Optionally use extraSpecialArgs
