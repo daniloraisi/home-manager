@@ -102,6 +102,7 @@ in
 
     zellij = {
       enable = true;
+      enableZshIntegration = true;
     };
 
     starship = {
