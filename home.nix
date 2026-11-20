@@ -178,10 +178,12 @@ in
 
     ssh = {
       enable = true;
-      matchBlocks."github.com" = {
-        controlMaster = "auto";
-        controlPath = "~/.ssh/cm-%r@%h:%p";
-        controlPersist = "10m";
+      enableDefaultConfig = false;
+    
+      settings."github.com" = {
+        ControlMaster = "auto";
+        ControlPath = "~/.ssh/cm-%C";
+        ControlPersist = "10m";
       };
     };
 
