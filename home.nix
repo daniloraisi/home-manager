@@ -140,7 +140,7 @@ in
       viAlias = true;
       vimAlias = true;
 
-      sideloadInitLua = false;
+      sideloadInitLua = true;
     };
   };
 
