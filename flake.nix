@@ -12,21 +12,34 @@
 
   outputs = { nixpkgs, home-manager, ... }:
     let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      # Monta uma configuração a partir da arquitetura e dos módulos do ambiente
+      mkHome = { system, modules }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.${system};
+
+          modules = [
+            ./home.nix
+            (import ./local.nix)
+          ] ++ modules;
+        };
+
+      wsl = mkHome {
+        system = "x86_64-linux";
+        modules = [ ./hosts/wsl.nix ];
+      };
+
+      android = mkHome {
+        system = "aarch64-linux";
+        modules = [ ./hosts/android.nix ];
+      };
     in {
-      homeConfigurations."danilo" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      homeConfigurations = {
+        "danilo@wsl" = wsl;
+        "danilo@android" = android;
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [
-          ./home.nix
-          (import ./local.nix)
-        ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
+        # Mantém o nome antigo apontando para o WSL, para
+        # "home-manager switch" sem --flake continuar funcionando lá
+        "danilo" = wsl;
       };
     };
 }
