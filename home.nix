@@ -70,22 +70,33 @@ in
   programs = {
     home-manager.enable = true;
 
-    bash = {
+    programs.zsh = {
       enable = true;
-      enableCompletion = true;
-      shellAliases = {
-        ls = "eza -1lagh --git --color --icons always";
-      };
-
-      # vai pro início do .bashrc
-      bashrcExtra = ''
-        [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
-      '';
+      defaultKeymap = "emacs";          # mesmo comportamento do bash (gera "bindkey -e")
+      autosuggestion.enable = true;     # sugestão inline do histórico
+      syntaxHighlighting.enable = true;
     
-      # vai pro final, depois das integrações (starship etc.)
-      initExtra = lib.mkOrder 3000 ''
-        bleopt complete_auto_menu=300   # abre a lista sozinha após 300 ms, estilo ListView
-        [[ ! ''${BLE_VERSION-} ]] || ble-attach
+      history = {
+        size = 50000;
+        save = 50000;
+        ignoreDups = true;
+        share = true;
+      };
+    
+      initContent = ''
+        # teclas que o zsh não mapeia por padrão (sequências do Windows Terminal)
+        bindkey '^[[H'    beginning-of-line     # Home
+        bindkey '^[[F'    end-of-line           # End
+        bindkey '^[[1;5H' beginning-of-line     # Ctrl+Home
+        bindkey '^[[1;5F' end-of-line           # Ctrl+End
+        bindkey '^[[1;5D' backward-word         # Ctrl+←
+        bindkey '^[[1;5C' forward-word          # Ctrl+→
+        bindkey '^[[3~'   delete-char           # Delete
+        bindkey '^[[3;5~' kill-word             # Ctrl+Delete
+        bindkey '^H'      backward-kill-word    # Ctrl+Backspace
+    
+        # Ctrl+W / Ctrl+← param em "/", "-", "." como no bash
+        WORDCHARS='*?_[]~=&;!#$%^(){}<>'
       '';
     };
 
