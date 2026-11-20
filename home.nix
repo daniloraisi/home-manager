@@ -149,6 +149,6 @@ in
     enable = true;
     configFile."nvim".source =
       config.lib.file.mkOutOfStoreSymlink
-        "${config.home.homeDirectory}/src/astronvim-config";
+        "${config.home.homeDirectory}/.astronvim";
   };
 }
