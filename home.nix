@@ -72,8 +72,8 @@ in
 
     zsh = {
       enable = true;
-      defaultKeymap = "emacs";          # mesmo comportamento do bash (gera "bindkey -e")
-      autosuggestion.enable = true;     # sugestão inline do histórico
+      defaultKeymap = "emacs";
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
     
       history = {
@@ -83,21 +83,40 @@ in
         share = true;
       };
     
-      initContent = ''
-        # teclas que o zsh não mapeia por padrão (sequências do Windows Terminal)
-        bindkey '^[[H'    beginning-of-line     # Home
-        bindkey '^[[F'    end-of-line           # End
-        bindkey '^[[1;5H' beginning-of-line     # Ctrl+Home
-        bindkey '^[[1;5F' end-of-line           # Ctrl+End
-        bindkey '^[[1;5D' backward-word         # Ctrl+←
-        bindkey '^[[1;5C' forward-word          # Ctrl+→
-        bindkey '^[[3~'   delete-char           # Delete
-        bindkey '^[[3;5~' kill-word             # Ctrl+Delete
-        bindkey '^H'      backward-kill-word    # Ctrl+Backspace
+      historySubstringSearch = {
+        enable = true;
+        searchUpKey = [ "^[[A" "^[OA" ];
+        searchDownKey = [ "^[[B" "^[OB" ];
+      };
     
-        # Ctrl+W / Ctrl+← param em "/", "-", "." como no bash
-        WORDCHARS='*?_[]~=&;!#$%^(){}<>'
-      '';
+      initContent = lib.mkMerge [
+        # fzf-tab: depois do compinit (570), antes do autosuggestions (700)
+        (lib.mkOrder 600 ''
+          source ${pkgs.zsh-fzf-tab}/share/fzf-tab/fzf-tab.plugin.zsh
+    
+          zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+          zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+          zstyle ':completion:*:descriptions' format '[%d]'
+          zstyle ':completion:*' menu no
+          zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons $realpath'
+          zstyle ':fzf-tab:*' switch-group '<' '>'
+        '')
+    
+        # o que você já tinha (ordem padrão, 1000)
+        ''
+          bindkey '^[[H'    beginning-of-line     # Home
+          bindkey '^[[F'    end-of-line           # End
+          bindkey '^[[1;5H' beginning-of-line     # Ctrl+Home
+          bindkey '^[[1;5F' end-of-line           # Ctrl+End
+          bindkey '^[[1;5D' backward-word         # Ctrl+←
+          bindkey '^[[1;5C' forward-word          # Ctrl+→
+          bindkey '^[[3~'   delete-char           # Delete
+          bindkey '^[[3;5~' kill-word             # Ctrl+Delete
+          bindkey '^H'      backward-kill-word    # Ctrl+Backspace
+    
+          WORDCHARS='*?_[]~=&;!#$%^(){}<>'
+        ''
+      ];
     };
 
     zellij = {
