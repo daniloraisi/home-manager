@@ -139,6 +139,8 @@ in
       defaultEditor = true;
       viAlias = true;
       vimAlias = true;
+
+      sideloadInitLua = false;
     };
   };
 
