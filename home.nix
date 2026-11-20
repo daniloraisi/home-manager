@@ -180,17 +180,18 @@ in
     git = {
       enable = true;
 
-      userName = "Danilo Raisi";
-      userEmail = effectiveGitEmail;
+      settings = {
+        user = {
+          name = "Danilo Raisi";
+          email = effectiveGitEmail;
+        };
+        gpg.format = "ssh";
+        gpg.ssh.allowedSignersFile = "~/.config/git/allowed_signers";
+      };
 
       signing = {
         signByDefault = true;
         key = "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub";
-      };
-
-      extraConfig = {
-        gpg.format = "ssh";
-        gpg.ssh.allowedSignersFile = "~/.config/git/allowed_signers";
       };
     };
   };
