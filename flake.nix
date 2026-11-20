@@ -27,8 +27,8 @@
               gitEmail =
                 let e = builtins.getEnv "GIT_EMAIL";
                 in if e == "" then null else e;
-            }
-          }
+            };
+          };
         ];
 
         # Optionally use extraSpecialArgs
