@@ -137,6 +137,11 @@ in
     };
     
     lazygit.enable = true;
+
+    gh.enable = true;
+
+    gh-dash.enable = true;
+
   };
 
   xdg.enable = true;
