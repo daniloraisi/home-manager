@@ -76,6 +76,17 @@ in
       shellAliases = {
         ls = "eza -1lagh --git --color --icons always";
       };
+
+      # vai pro início do .bashrc
+      bashrcExtra = ''
+        [[ $- == *i* ]] && source ${pkgs.blesh}/share/blesh/ble.sh --noattach
+      '';
+    
+      # vai pro final, depois das integrações (starship etc.)
+      initExtra = ''
+        bleopt complete_auto_menu=300   # abre a lista sozinha após 300 ms, estilo ListView
+        [[ ! ''${BLE_VERSION-} ]] || ble-attach
+      '';
     };
 
     zellij = {
