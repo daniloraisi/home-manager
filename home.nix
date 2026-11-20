@@ -176,6 +176,15 @@ in
       };
     };
 
+    ssh = {
+      enable = true;
+      matchBlocks."github.com" = {
+        controlMaster = "auto";
+        controlPath = "~/.ssh/cm-%r@%h:%p";
+        controlPersist = "10m";
+      };
+    };
+
     neovim = {
       enable = true;
       defaultEditor = true;
