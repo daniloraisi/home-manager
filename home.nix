@@ -88,7 +88,7 @@ in
   };
 
   home.activation.allowedSigners =
-    config.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "$HOME/.config/git"
   
       if [ -f "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub" ]; then
