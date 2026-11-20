@@ -13,6 +13,13 @@ in
   home.packages = with pkgs; [
     xdg-utils
     socat
+    ripgrep
+    fd
+    lazygit
+    gcc
+    tree-sitter
+    nodejs
+    python3
   ];
 
   home.file = {};
@@ -127,8 +134,20 @@ in
         key = "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub";
       };
     };
+
+    neovim = {
+      enable = true;
+      defaultEditor = true;
+      viAlias = true;
+      vimAlias = true;
+    }
   };
 
 
-  xdg.enable = true;
+  xdg = {
+    enable = true;
+    configFile."nvim".source =
+      config.lib.file.mkOutOfStoreSymLink
+        "${config.home.homeDirectory}/src/astronvim-config";
+  };
 }
