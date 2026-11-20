@@ -136,6 +136,11 @@ in
 
     fzf = {
       enable = true;
+      historyWidgetOptions = [
+        "--height=40%"
+        "--layout=reverse"     # lista abaixo do prompt, mais recente em cima
+        "--border=top"
+      ];
     };
 
     direnv = {
