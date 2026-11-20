@@ -1,11 +1,10 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, gitEmail ? null ... }:
 
 let
-  gitEmail =
-    let email = builtins.getEnv "GIT_EMAIL";
-    in if email == ""
+  effectiveGitEmail =
+    if gitEmail == ""
        then throw "Defina GIT_EMAIL antes de executar home-manager switch"
-       else email;
+       else gitEmail;
 
   starshipToml = ./dotfiles/starship.toml;
   starshipSettings = builtins.fromTOML (builtins.readFile starshipToml);
@@ -93,7 +92,7 @@ in
       mkdir -p "$HOME/.config/git"
   
       if [ -f "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub" ]; then
-        echo "${gitEmail} $(cat /mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub)" \
+        echo "${effectiveGitEmail} $(cat /mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub)" \
           > "$HOME/.config/git/allowed_signers"
       fi
     '';
@@ -182,7 +181,7 @@ in
       enable = true;
 
       userName = "Danilo Raisi";
-      userEmail = gitEmail;
+      userEmail = effectiveGitEmail;
 
       signing = {
         signByDefault = true;
