@@ -25,7 +25,6 @@ in
   home.file = {};
 
   home.sessionVariables = {
-    EDITOR = "vim";
     ZELLIJ_AUTO_EXIT = lib.mkForce "true";
     CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
     PATH="$HOME/.local/bin:$PATH";
