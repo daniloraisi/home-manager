@@ -39,8 +39,7 @@ in
     #   echo "Hello, ${config.home.username}!"
     # '')
     xdg-utils
-    libfido2
-    yubikey-manager
+    socat
   ];
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -80,6 +79,31 @@ in
     CARAPACE_BRIDGES = "zsh,fish,bash,inshellisense";
     PATH="$HOME/.local/bin:$PATH";
     BROWSER="/mnt/c/Windows/System32/cmd.exe /c start";
+    SSH_AUTH_SOCK = "$HOME/.ssh/agent.sock";
+  };
+
+  systemd.user.services.windows-ssh-agent = {
+    Unit = {
+      Description = "Windows OpenSSH Agent bridge";
+    };
+
+    Service = {
+      ExecStartPre = [
+        "${pkgs.coreutils}/bin/mkdir -p %h/.ssh"
+        "${pkgs.coreutils}/bin/rm -f %h/.ssh/agent.sock"
+      ];
+
+      ExecStart = ''
+        ${pkgs.socat}/bin/socat \
+          UNIX-LISTEN:%h/.ssh/agent.sock \
+          EXEC:'/mnt/c/Windows/System32/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent'
+      '';
+
+      Restart = "always";
+      RestartSec = 5;
+    };
+
+    Install.WantedBy = [ "default.target" ];
   };
 
   # Let Home Manager install and manage itself.
@@ -92,7 +116,7 @@ in
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
       shellAliases = {
-        ls = "eza -1lagh --git --color --icons";
+        ls = "eza -1lagh --git --color --icons always";
       };
     };
 
@@ -122,12 +146,6 @@ in
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
-    };
-
-    keychain = {
-      enable = true;
-      enableZshIntegration = true;
-      keys = [ "id_ed25519" ];
     };
 
     eza = {
