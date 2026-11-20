@@ -55,8 +55,8 @@ in
 
       ExecStart = ''
         ${pkgs.socat}/bin/socat \
-          UNIX-LISTEN:%h/.ssh/agent.sock \
-          EXEC:'/mnt/c/Windows/System32/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent'
+          UNIX-LISTEN:%h/.ssh/agent.sock,fork,umask=077 \
+          EXEC:'/mnt/c/Windows/System32/npiperelay.exe -ei -s //./pipe/openssh-ssh-agent',nofork
       '';
 
       Restart = "always";
