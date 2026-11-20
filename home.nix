@@ -136,9 +136,9 @@ in
 
     fzf = {
       enable = true;
-      historyWidgetOptions = [
+      historyWidget.options = [
         "--height=40%"
-        "--layout=reverse"     # lista abaixo do prompt, mais recente em cima
+        "--layout=reverse"
         "--border=top"
       ];
     };
