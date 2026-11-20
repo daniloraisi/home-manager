@@ -83,7 +83,7 @@ in
       '';
     
       # vai pro final, depois das integrações (starship etc.)
-      initExtra = ''
+      initExtra = lib.mkOrder 3000 ''
         bleopt complete_auto_menu=300   # abre a lista sozinha após 300 ms, estilo ListView
         [[ ! ''${BLE_VERSION-} ]] || ble-attach
       '';
