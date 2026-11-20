@@ -102,29 +102,24 @@ in
 
     zellij = {
       enable = true;
-      enableBashIntegration = true;
     };
 
     starship = {
       enable = true;
-      enableBashIntegration = true;
       settings = starshipSettings;
     };
 
     zoxide = {
       enable = true;
-      enableBashIntegration = true;
       options = [ "--cmd cd" ];
     };
 
     fzf = {
       enable = true;
-      enableBashIntegration = true;
     };
 
     direnv = {
       enable = true;
-      enableBashIntegration = true;
       nix-direnv.enable = true;
     };
 
