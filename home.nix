@@ -1,6 +1,12 @@
 { config, pkgs, lib, ... }:
 
 let
+  gitEmail =
+    let email = builtins.getEnv "GIT_EMAIL";
+    in if email == ""
+       then throw "Defina GIT_EMAIL antes de executar home-manager switch"
+       else email;
+
   starshipToml = ./dotfiles/starship.toml;
   starshipSettings = builtins.fromTOML (builtins.readFile starshipToml);
 in
@@ -82,6 +88,16 @@ in
     SSH_AUTH_SOCK = "$HOME/.ssh/agent.sock";
   };
 
+  home.activation.allowedSigners =
+    config.lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p "$HOME/.config/git"
+  
+      if [ -f "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub" ]; then
+        echo "${gitEmail} $(cat /mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub)" \
+          > "$HOME/.config/git/allowed_signers"
+      fi
+    '';
+
   systemd.user.services.windows-ssh-agent = {
     Unit = {
       Description = "Windows OpenSSH Agent bridge";
@@ -162,7 +178,24 @@ in
 
     gh-dash.enable = true;
 
+    git = {
+      enable = true;
+
+      userName = "Danilo Raisi";
+      userEmail = gitEmail;
+
+      signing = {
+        signByDefault = true;
+        key = "/mnt/c/Users/Danilo/.ssh/id_ed25519_sk.pub";
+      };
+
+      extraConfig = {
+        gpg.format = "ssh";
+        gpg.ssh.allowedSignersFile = "~/.config/git/allowed_signers";
+      };
+    };
   };
+
 
   xdg.enable = true;
 }
