@@ -70,7 +70,7 @@ in
   programs = {
     home-manager.enable = true;
 
-    programs.zsh = {
+    zsh = {
       enable = true;
       defaultKeymap = "emacs";          # mesmo comportamento do bash (gera "bindkey -e")
       autosuggestion.enable = true;     # sugestão inline do histórico
