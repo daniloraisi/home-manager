@@ -22,13 +22,7 @@
         # the path to your home.nix.
         modules = [
           ./home.nix
-          {
-            _module.args = {
-              gitEmail =
-                let e = builtins.getEnv "GIT_EMAIL";
-                in if e == "" then null else e;
-            };
-          }
+          ./local.nix
         ];
 
         # Optionally use extraSpecialArgs
