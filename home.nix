@@ -1,4 +1,4 @@
-{ config, pkgs, lib, gitEmail ? null ... }:
+{ config, pkgs, lib, gitEmail ? null, ... }:
 
 let
   effectiveGitEmail =
