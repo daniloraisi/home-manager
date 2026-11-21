@@ -27,9 +27,15 @@
         system = "x86_64-linux";
         modules = [ ./hosts/wsl.nix ];
       };
+
+      codespace = mkHome {
+        system = "x86_64-linux";
+        modules = [ ./hosts/codespace.nix ];
+      };
     in {
       homeConfigurations = {
         "danilo@wsl" = wsl;
+        "danilo@codespace" = codespace;
 
         # Mantém o nome antigo apontando para o WSL, para
         # "home-manager switch" sem --flake continuar funcionando lá

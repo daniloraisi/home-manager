@@ -32,3 +32,24 @@ git clone git@github.com:daniloraisi/home-manager ~/.config/home-manager
 nix run home-manager/release-24.11 -- init --switch
 ```
 
+
+### GitHub Codespaces (dotfiles)
+
+The same configuration runs in any codespace whose devcontainer has Nix (FatiaCerta, Iron, Opções a Seco, Swing Trade),
+so `gh codespace ssh` opens zsh with starship, zellij and AstroNvim.
+
+1. On github.com → **Settings → Codespaces → Dotfiles**, select this repository and check **Automatically install
+   dotfiles**. It applies to codespaces created from then on.
+2. When a codespace is created, GitHub clones this repository and runs `install.sh`, which:
+   - generates `local.nix` with the codespace user (`vscode`), its home and the git name/email set by Codespaces;
+   - clones the AstroNvim template into `~/.astronvim`;
+   - runs `home-manager switch` with `danilo@codespace` (`hosts/codespace.nix`);
+   - makes zsh the login shell, so SSH sessions start in it.
+3. Connect with `gh codespace ssh` (the devcontainer needs the `sshd` feature). zellij starts automatically only in
+   SSH sessions; the VS Code terminal opens zsh without it.
+
+Outside a codespace, or in a codespace without Nix, `install.sh` does nothing. The output is in
+`/workspaces/.codespaces/.persistedshare/creation.log`. The first switch downloads the packages from `home.nix`, so
+creating a codespace takes a few extra minutes.
+
+After changing the configuration inside a codespace, apply it with `hms`.
