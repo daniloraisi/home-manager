@@ -27,15 +27,9 @@
         system = "x86_64-linux";
         modules = [ ./hosts/wsl.nix ];
       };
-
-      android = mkHome {
-        system = "aarch64-linux";
-        modules = [ ./hosts/android.nix ];
-      };
     in {
       homeConfigurations = {
         "danilo@wsl" = wsl;
-        "danilo@android" = android;
 
         # Mantém o nome antigo apontando para o WSL, para
         # "home-manager switch" sem --flake continuar funcionando lá
