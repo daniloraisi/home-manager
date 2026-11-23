@@ -51,16 +51,4 @@ in
 
     Install.WantedBy = [ "default.target" ];
   };
-
-  programs.git = {
-    settings = {
-      gpg.format = "ssh";
-      gpg.ssh.allowedSignersFile = "~/.config/git/allowed_signers";
-    };
-
-    signing = {
-      signByDefault = true;
-      key = signingKey;
-    };
-  };
 }
